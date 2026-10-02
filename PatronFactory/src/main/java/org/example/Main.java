@@ -12,9 +12,9 @@ public class Main {
         System.out.println(QueRico.describir("Que Rico Estoy"));
 
         Flamenco baile= (Flamenco) Andalucia.createElementoAndaluz("*Fla1");
-        System.out.println(QueRico.describir("Ira que arte"));
+        System.out.println(baile.describir("Ira que arte"));
 
         Flamenco baile2= (Flamenco) Andalucia.createElementoAndaluz("*Fla3");
-        System.out.println(QueRico.describir("No"));
+        System.out.println(baile2.describir("No"));
     }
 }
