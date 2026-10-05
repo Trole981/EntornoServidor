@@ -8,13 +8,13 @@ public class Main {
         // to see how IntelliJ IDEA suggests fixing it.
         AndaluciaFactory Andalucia=new AndaluciaFactory();
 
-        Gazpacho QueRico= (Gazpacho) Andalucia.createElementoAndaluz("#Gaz1");
+        ElementoAndaluz QueRico= Andalucia.createElementoAndaluz("#Gaz1");
         System.out.println(QueRico.describir("Que Rico Estoy"));
 
-        Flamenco baile= (Flamenco) Andalucia.createElementoAndaluz("*Fla1");
+        ElementoAndaluz baile= Andalucia.createElementoAndaluz("*Fla1");
         System.out.println(baile.describir("Ira que arte"));
 
-        Flamenco baile2= (Flamenco) Andalucia.createElementoAndaluz("*Fla3");
+        ElementoAndaluz baile2= Andalucia.createElementoAndaluz("*Fla3");
         System.out.println(baile2.describir("No"));
     }
 }
