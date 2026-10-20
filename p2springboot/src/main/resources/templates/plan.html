@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${titulo}">Mi plan de estudio</title>
+</head>
+<body>
+<main>
+    <h1 th:text="${titulo}">Título</h1>
+
+    <!-- th:text escapa el HTML, así que lo que llegue por la URL se muestra como texto -->
+    <p>Hola, <strong th:text="${nombre}">estudiante</strong>.</p>
+
+    <!-- #lists.size cuenta los elementos de la lista -->
+    <p><span th:text="${#lists.size(asignaturas)}">3</span> asignaturas</p>
+    <p><span th:text="${totalMinutos}">95</span> minutos en total</p>
+
+    <!-- formatDecimal(valor, enteros mínimos, sep. miles, decimales, sep. decimal) -->
+    <p><span th:text="${#numbers.formatDecimal(totalHoras, 1, 'POINT', 1, 'COMMA')}">1,6</span> horas</p>
+
+    <ol>
+        <!-- iterStat.index empieza en 0, por eso sumamos 1 para numerar -->
+        <li th:each="asignatura, iterStat : ${asignaturas}">
+            <span th:text="${iterStat.index + 1}">1</span>.
+            <span th:text="${asignatura}">Asignatura</span> -
+            <!-- misma posición en la lista de duraciones -->
+            <span th:text="${duraciones[iterStat.index]} + ' min'">25 min</span>
+        </li>
+    </ol>
+
+    <!-- Ampliación: sequence(0, 60, 15) genera 0, 15, 30, 45, 60 -->
+    <p>
+        Escala de minutos:
+        <span th:each="marca : ${#numbers.sequence(0, 60, 15)}" th:text="${marca} + ' '">0</span>
+    </p>
+</main>
+</body>
+</html>
