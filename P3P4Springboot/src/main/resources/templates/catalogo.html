@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!-- Formulario de ejemplo: los valores se enlazan con SolicitudForm usando th:field. -->
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>catalogo</title>
+    <!-- @{...} genera la URL del recurso estático respetando el contexto de la aplicación. -->
+    <link rel="stylesheet" th:href="@{/css/p4.css}">
+</head>
+<body>
+    <header>
+        <h1>Aula Maker - Catálogo de Materiales</h1>
+        <p>Selecciona un recurso para ver sus detalles o realizar una solicitud de préstamo.</p>
+    </header>
+
+    <main>
+        <!-- Contenedor de las tarjetas de los materiales -->
+        <div class="catalogo-container">
+
+            <!-- th:each recorre el array String[][] "materiales" del modelo.
+                 Cada "material" es una fila String[] con: [0]código, [1]nombre, [2]descripción -->
+            <div class="tarjeta" th:each="material : ${materiales}">
+
+                <!-- Mostramos el nombre del material [1] -->
+                <h2 th:text="${material[1]}">Nombre del Material</h2>
+
+                <!-- Mostramos el código en un formato destacado [0] -->
+                <p class="codigo"><strong>Código:</strong> <span th:text="${material[0]}">CODIGO</span></p>
+
+                <!-- Mostramos la descripción [2] -->
+                <p class="descripcion" th:text="${material[2]}">Descripción detallada del recurso...</p>
+
+                <!-- Enlace dinámico a la ficha usando la sintaxis de Thymeleaf @{...}
+                     El marcador {codigo} se reemplaza por el valor real del array de forma segura -->
+                <a class="boton-enlace" th:href="@{/materiales/{codigo}(codigo =${material[0]})}">Ver Ficha Técnica</a>
+
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <!-- Enlace global de navegación para ir directamente a una nueva solicitud -->
+        <p>¿Sabes ya lo que necesitas? <a th:href="@{/solicitud/nueva}">Crear nueva solicitud de préstamo</a></p>
+    </footer>
+</body>

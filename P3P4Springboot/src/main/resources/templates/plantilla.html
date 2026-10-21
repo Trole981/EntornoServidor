@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<!-- 1. El fragmento de la cabecera que heredan las demás páginas -->
+<head th:fragment="cabecera(titulo)">
+    <meta charset="UTF-8">
+    <title th:text="${titulo}">Aula Maker</title>
+    <link rel="stylesheet" th:href="@{/css/p4.css}">
+</head>
+<body>
+
+<!-- 2. El fragmento del menú superior de navegación -->
+<header th:fragment="navegacion" class="header-principal">
+    <div class="logo">🛠️ Aula Maker</div>
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">Ver Catálogo</a></li>
+            <li><a th:href="@{/solicitud/nueva}">Nueva Solicitud</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <p>Este texto se sobrescribirá en las vistas hijas.</p>
+</main>
+
+<!-- 3. El fragmento del pie de página común -->
+<footer th:fragment="pie" class="footer-principal">
+    <p>© 2026 Aula Maker - Sistema de Gestión de Préstamos</p>
+</footer>
+
+</body>
+</html>

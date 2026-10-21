@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Aula Maker - Recurso No Encontrado</title>
+    <link rel="stylesheet" th:href="@{/css/p4.css}">
+</head>
+<body class="error-page">
+<main class="error-container">
+    <div class="error-icono">🔍❌</div>
+    <h1>404 - Material No Encontrado</h1>
+    <p class="error-mensaje">El recurso o código de inventario que estás intentando consultar no existe en nuestro catálogo en memoria.</p>
+
+    <!-- Enlace seguro para regresar al inicio -->
+    <div class="acciones">
+        <a th:href="@{/}" class="boton-principal">Volver al Catálogo Principal</a>
+    </div>
+</main>
+<footer>
+    <p>© 2026 Aula Maker - Control de Errores</p>
+</footer>
+</body>
+</html>

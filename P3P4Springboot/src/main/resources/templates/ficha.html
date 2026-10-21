@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Aula Maker - Ficha Técnica</title>
+    <!-- Enlace al archivo CSS común del proyecto (Paso 16) -->
+    <link rel="stylesheet" th:href="@{/css/p4.css}">
+</head>
+<body>
+
+<header>
+    <h1>Ficha del Material</h1>
+    <p>Detalles técnicos y disponibilidad del recurso seleccionado.</p>
+</header>
+
+<main>
+    <!-- Contenedor principal de la ficha técnica -->
+    <article class="ficha-container">
+
+        <!-- Mostramos el Nombre del Material desde el índice 1 -->
+        <h2 th:text="${material[1]}">Nombre del Material</h2>
+
+        <div class="detalles-producto">
+            <!-- Mostramos el Código desde el índice 0 -->
+            <p><strong>Código de inventario:</strong>
+                <code th:text="${material[0]}">CODIGO</code>
+            </p>
+
+            <!-- Mostramos la Descripción desde el índice 2 -->
+            <p><strong>Descripción del recurso:</strong></p>
+            <p class="descripcion-texto" th:text="${material[2]}">Descripción detallada...</p>
+
+            <!-- Mostramos el Turno solicitado (parámetro de consulta) -->
+            <p class="turno-info">
+                <strong>Turno de asignación:</strong>
+                <span th:text="${turno}" class="resaltado">general</span>
+            </p>
+        </div>
+
+        <!-- Zona de acciones y navegación -->
+        <div class="acciones">
+            <!-- Enlace dinámico para volver al catálogo raíz de forma segura -->
+            <a th:href="@{/}" class="boton-secundario">← Volver al Catálogo</a>
+
+            <!-- Enlace preparado para el Paso 11 (iniciar solicitud con este material ya pre-elegido) -->
+            <a th:href="@{/solicitud/nueva(codigo=${material[0]})}" class="boton-principal">Solicitar este Material</a>
+        </div>
+
+    </article>
+</main>
+
+<footer>
+    <p>© 2026 Aula Maker - Sistema de Gestión de Préstamos</p>
+</footer>
+
+</body>
+</html>

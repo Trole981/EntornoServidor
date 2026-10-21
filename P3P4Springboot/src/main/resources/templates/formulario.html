@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" lang="es">
+<head>
+    <!-- Reutilizamos la cabecera común inyectando el título de esta página -->
+    <th:block th:replace="~{plantilla :: cabecera('Nueva Solicitud')}"></th:block>
+</head>
+<body>
+
+<!-- Insertamos la barra de navegación de la plantilla -->
+<header th:replace="~{plantilla :: navegacion}"></header>
+
+<main class="formulario-container">
+    <h1>Formulario de Solicitud de Préstamo</h1>
+    <p>Introduce tus datos personales y las fechas deseadas para procesar la reserva del material.</p>
+
+    <!-- El formulario se vincula al objeto 'solicitud' del DTO -->
+    <form th:action="@{/solicitudes}" th:object="${solicitud}" method="post" class="form-diseno">
+
+        <!-- 1. Desplegable de selección del Material (Paso 11) -->
+        <div class="form-grupo">
+            <label for="material">Material a solicitar:</label>
+            <select id="material" th:field="*{material}" th:errorclass="campo-con-error">
+                <option value="">-- Seleccione un recurso del catálogo --</option>
+                <option th:each="mat : ${materiales}"
+                        th:value="${mat[0]}"
+                        th:text="${mat[1]}"></option>
+            </select>
+            <span class="error-msg" th:if="${#fields.hasErrors('material')}" th:errors="*{material}">Error</span>
+        </div>
+
+        <!-- 2. Campo Nombre del Solicitante (Paso 9) -->
+        <div class="form-grupo">
+            <label for="nombre">Nombre completo:</label>
+            <input type="text" id="nombre" th:field="*{nombre}" th:errorclass="campo-con-error" placeholder="Ej: Juan Pérez" required maxlength="60" />
+            <span class="error-msg" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error</span>
+        </div>
+
+        <!-- 3. Campo Correo Electrónico (Paso 9) -->
+        <div class="form-grupo">
+            <label for="correo">Correo electrónico de contacto:</label>
+            <input type="email" id="correo" th:field="*{correo}" th:errorclass="campo-con-error" placeholder="ejemplo@correo.com" required maxlength="120" />
+            <span class="error-msg" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}">Error</span>
+        </div>
+
+        <!-- 4. Campo Unidades (Paso 9) -->
+        <div class="form-grupo">
+            <label for="unidades">Número de unidades (Máx. 3):</label>
+            <input type="number" id="unidades" th:field="*{unidades}" th:errorclass="campo-con-error" min="1" max="3" required />
+            <span class="error-msg" th:if="${#fields.hasErrors('unidades')}" th:errors="*{unidades}">Error</span>
+        </div>
+
+        <!-- 5. Campo Fecha de Recogida (Paso 9) -->
+        <div class="form-grupo">
+            <label for="fechaRecogida">Fecha de recogida:</label>
+            <input type="date" id="fechaRecogida" th:field="*{fechaRecogida}" th:errorclass="campo-con-error" required />
+            <span class="error-msg" th:if="${#fields.hasErrors('fechaRecogida')}" th:errors="*{fechaRecogida}">Error</span>
+        </div>
+
+        <!-- 6. Campo Fecha de Devolución (Paso 9) -->
+        <div class="form-grupo">
+            <label for="fechaDevolucion">Fecha de devolución:</label>
+            <input type="date" id="fechaDevolucion" th:field="*{fechaDevolucion}" th:errorclass="campo-con-error" required />
+            <span class="error-msg" th:if="${#fields.hasErrors('fechaDevolucion')}" th:errors="*{fechaDevolucion}">Error</span>
+        </div>
+
+        <!-- 7. Selección de Turno (Mantenido por consistencia) -->
+        <div class="form-grupo">
+            <label>Turno de preferencia:</label>
+            <div class="radio-opciones">
+                <label><input type="radio" th:field="*{turno}" value="general" /> General</label>
+                <label><input type="radio" th:field="*{turno}" value="mañana" /> Mañana</label>
+                <label><input type="radio" th:field="*{turno}" value="tarde" /> Tarde</label>
+            </div>
+        </div>
+
+        <!-- 8. Campo Motivo de la solicitud (Paso 9) -->
+        <div class="form-grupo">
+            <label for="motivo">Motivo detallado del préstamo (Mín. 30 caracteres):</label>
+            <textarea id="motivo" th:field="*{motivo}" th:errorclass="campo-con-error" rows="4" placeholder="Explica detalladamente para qué proyecto o asignatura necesitas el recurso..." required></textarea>
+            <span class="error-msg" th:if="${#fields.hasErrors('motivo')}" th:errors="*{motivo}">Error</span>
+        </div>
+
+        <!-- 9. Checkbox de aceptación de normas (Paso 9) -->
+        <div class="form-grupo checkbox-grupo">
+            <label>
+                <input type="checkbox" id="aceptaNormas" th:field="*{aceptaNormas}" th:errorclass="campo-con-error" />
+                Acepto las normas de uso de la sala y me comprometo a devolver el material en perfecto estado.
+            </label>
+            <span class="error-msg" th:if="${#fields.hasErrors('aceptaNormas')}" th:errors="*{aceptaNormas}">Error</span>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="form-acciones">
+            <button type="submit" class="boton-principal">Enviar Solicitud</button>
+            <a th:href="@{/}" class="boton-secundario">Cancelar</a>
+        </div>
+
+    </form>
+</main>
+
+<!-- Insertamos el pie de página de la plantilla -->
+<footer th:replace="~{plantilla :: pie}"></footer>
+
+</body>
+</html>

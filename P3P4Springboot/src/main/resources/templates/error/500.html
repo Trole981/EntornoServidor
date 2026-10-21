@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Aula Maker - Error Interno</title>
+    <link rel="stylesheet" th:href="@{/css/p4.css}">
+</head>
+<body class="error-page">
+<main class="error-container">
+    <div class="error-icono">⚠️🔥</div>
+    <h1>500 - Error Interno del Servidor</h1>
+    <p class="error-mensaje">Ha ocurrido un problema inesperado en el servidor mientras procesábamos tu solicitud. Por favor, inténtalo de nuevo más tarde.</p>
+
+    <div class="acciones">
+        <a th:href="@{/}" class="boton-secundario">Regresar al Inicio</a>
+    </div>
+</main>
+<footer>
+    <p>© 2026 Aula Maker - Soporte Técnico</p>
+</footer>
+</body>
+</html>

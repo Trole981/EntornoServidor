@@ -19,7 +19,7 @@ public class PlanController {
 
         int totalMinutos = duraciones.stream().mapToInt(Integer::intValue).sum();
         double totalHoras = totalMinutos / 60.0;
-
+        //Hacemos los atributos qur se van a usar en el html
         model.addAttribute("nombre", nombre);
         model.addAttribute("titulo", "Mi plan de estudio de hoy");
         model.addAttribute("asignaturas", asignaturas);

@@ -1,0 +1,352 @@
+/* =========================================================================
+   VARIABLES GLOBALES Y CONFIGURACIÓN BASE
+   ========================================================================= */
+:root {
+    --color-primario: #2563eb;       /* Azul corporativo */
+    --color-primario-hover: #1d4ed8;
+    --color-secundario: #64748b;     /* Gris neutro */
+    --color-secundario-hover: #475569;
+    --color-fondo: #f8fafc;          /* Fondo claro grisáceo */
+    --color-tarjeta: #ffffff;
+    --color-texto: #1e293b;
+    --color-error: #dc2626;          /* Rojo de alertas */
+    --color-error-fondo: #fef2f2;
+    --color-exito: #16a34a;          /* Verde de confirmación */
+    --color-exito-fondo: #f0fdf4;
+    --fuente-principal: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    --borde-radio: 8px;
+    --sombra: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+* {
+    box-sizing: border-box; /* Requisito explícito de la guía */
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--fuente-principal);
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+/* =========================================================================
+   ESTILOS DE LA PLANTILLA COMÚN (LAYOUT)
+   ========================================================================= */
+.header-principal {
+    background-color: #0f172a; /* Azul oscuro noche */
+    color: #ffffff;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--sombra);
+}
+
+.header-principal .logo {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.header-principal nav ul {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+.header-principal nav a {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.header-principal nav a:hover {
+    color: #ffffff;
+}
+
+.footer-principal {
+    background-color: #0f172a;
+    color: #94a3b8;
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: auto;
+    font-size: 0.9rem;
+}
+
+/* =========================================================================
+   VISTA DE CATÁLOGO (TARJETAS EN REJILLA)
+   ========================================================================= */
+.catalogo-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Rejilla fluida */
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.tarjeta {
+    background: var(--color-tarjeta);
+    border-radius: var(--borde-radio);
+    padding: 1.5rem;
+    box-shadow: var(--sombra);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e2e8f0;
+}
+
+.tarjeta h2 {
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+}
+
+.tarjeta .codigo {
+    font-size: 0.85rem;
+    background: #edf2f7;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    align-self: flex-start;
+    margin-bottom: 1rem;
+}
+
+.tarjeta .descripcion {
+    color: #475569;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+/* =========================================================================
+   FORMULARIO Y ESTILOS DE ERROR (PASOS 11 y 16)
+   ========================================================================= */
+.formulario-container {
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.form-diseno {
+    background: var(--color-tarjeta);
+    padding: 2rem;
+    border-radius: var(--borde-radio);
+    box-shadow: var(--sombra);
+    margin-top: 1.5rem;
+}
+
+.form-grupo {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-grupo label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #334155;
+}
+
+.form-grupo input[type="text"],
+.form-grupo input[type="email"],
+.form-grupo input[type="number"],
+.form-grupo input[type="date"],
+.form-grupo select,
+.form-grupo textarea {
+    width: 100%; /* Requisito explícito de la guía */
+    padding: 0.75rem;
+    border: 1px solid #cbd5e1;
+    border-radius: var(--borde-radio);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-grupo textarea {
+    resize: vertical;
+}
+
+.radio-opciones {
+    display: flex;
+    gap: 1.5rem;
+    padding-top: 0.25rem;
+}
+
+.radio-opciones label {
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.checkbox-grupo label {
+    font-weight: normal;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.checkbox-grupo input[type="checkbox"] {
+    margin-top: 0.3rem;
+}
+
+/* Clases dinámicas aplicadas por th:errorclass (Paso 11 y 16) */
+.campo-con-error {
+    border-color: var(--color-error) !important;
+    background-color: var(--color-error-fondo);
+}
+
+.error-msg {
+    color: var(--color-error);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 0.4rem;
+}
+
+/* =========================================================================
+   VISTA DE RESULTADO Y PÁGINAS DE ERROR
+   ========================================================================= */
+.resultado-container, .error-container {
+    background: var(--color-tarjeta);
+    padding: 2.5rem;
+    border-radius: var(--borde-radio);
+    box-shadow: var(--sombra);
+    margin-top: 2rem;
+}
+
+.tarjeta-exito {
+    text-align: center;
+    background-color: var(--color-exito-fondo);
+    border: 1px solid #bbf7d0;
+    padding: 1.5rem;
+    border-radius: var(--borde-radio);
+    margin-bottom: 2rem;
+}
+
+.icono-exito, .error-icono {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.tabla-resumen {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+}
+
+.tabla-resumen th, .tabla-resumen td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.tabla-resumen th {
+    background-color: #f8fafc;
+    font-weight: 600;
+    width: 35%;
+}
+
+.aviso-legal {
+    background-color: #fffbeb;
+    border-left: 4px solid #f59e0b;
+    padding: 1rem;
+    border-radius: 4px;
+    margin: 1.5rem 0;
+}
+
+/* =========================================================================
+   BOTONES Y ENLACES (ÁREA TÁCTIL CÓMODA)
+   ========================================================================= */
+.boton-principal, .boton-secundario, .boton-enlace {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: var(--borde-radio);
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s;
+    min-height: 44px; /* Tamaño táctil mínimo recomendado */
+}
+
+.boton-principal {
+    background-color: var(--color-primario);
+    color: white;
+}
+
+.boton-principal:hover {
+    background-color: var(--color-primario-hover);
+}
+
+.boton-secundario {
+    background-color: transparent;
+    color: var(--color-secundario);
+    border: 1px solid #cbd5e1;
+}
+
+.boton-secundario:hover {
+    background-color: #f1f5f9;
+    color: var(--color-secundario-hover);
+}
+
+.boton-enlace {
+    background-color: #f1f5f9;
+    color: var(--color-primario);
+    margin-top: auto;
+}
+
+.boton-enlace:hover {
+    background-color: #e2e8f0;
+}
+
+.form-acciones, .resumen-acciones {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+/* =========================================================================
+   MEDIA QUERY PARA SMARTPHONES (Paso 16)
+   ========================================================================= */
+@media (max-width: 480px) {
+    .form-diseno {
+        padding: 1rem;
+    }
+
+    .radio-opciones {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .form-acciones, .resumen-acciones {
+        flex-direction: column;
+    }
+
+    .boton-principal, .boton-secundario {
+        width: 100%;
+    }
+
+    .header-principal {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .tabla-resumen th, .tabla-resumen td {
+        display: block;
+        width: 100%;
+    }
+
+    .tabla-resumen th {
+        background-color: transparent;
+        padding-bottom: 0.25rem;
+    }
+}

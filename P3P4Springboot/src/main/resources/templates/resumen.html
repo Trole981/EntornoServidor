@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" lang="es">
+<head>
+    <!-- Reutilizamos la cabecera común inyectando el título de éxito -->
+    <th:block th:replace="~{plantilla :: cabecera('Solicitud Confirmada')}"></th:block>
+</head>
+<body>
+
+<!-- Insertamos la barra de navegación de la plantilla -->
+<header th:replace="~{plantilla :: navegacion}"></header>
+
+<main class="resumen-container">
+    <!-- Tarjeta de confirmación visual -->
+    <div class="tarjeta-exito">
+        <div class="icono-exito">✅</div>
+        <h1>¡Solicitud Procesada Con Éxito!</h1>
+        <p class="subtitulo-exito">Tu reserva de material en el Aula Maker ha sido registrada correctamente.</p>
+    </div>
+
+    <!-- Bloque con el desglose de los datos introducidos -->
+    <section class="detalles-resumen">
+        <h2>Resumen de la Reserva</h2>
+
+        <table class="tabla-resumen">
+            <tbody>
+            <tr>
+                <th>Material Reservado:</th>
+                <!-- Mostramos el nombre descriptivo que recuperamos del catálogo -->
+                <td th:text="${nombreMaterial}">Nombre del Recurso</td>
+            </tr>
+            <tr>
+                <th>Código de Inventario:</th>
+                <td><code th:text="${solicitud.material}">CODIGO</code></td>
+            </tr>
+            <tr>
+                <th>Solicitante:</th>
+                <td th:text="${solicitud.nombre}">Juan Pérez</td>
+            </tr>
+            <tr>
+                <th>Email de Contacto:</th>
+                <td th:text="${solicitud.correo}">ejemplo@correo.com</td>
+            </tr>
+            <tr>
+                <th>Turno Asignado:</th>
+                <td><span class="etiqueta-turno" th:text="${solicitud.turno}">general</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Acciones de navegación de retorno seguro -->
+    <div class="resumen-acciones">
+        <a th:href="@{/}" class="boton-principal">Volver al Catálogo Principal</a>
+        <a th:href="@{/solicitud/nueva}" class="boton-secundario">Realizar Otra Solicitud</a>
+    </div>
+</main>
+
+<!-- Insertamos el pie de página de la plantilla -->
+<footer th:replace="~{plantilla :: pie}"></footer>
+
+</body>
+</html>
