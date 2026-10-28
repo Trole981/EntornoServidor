@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!-- Página de inicio: descubrir actividades. Reutiliza los fragmentos de fragments/comun.html. -->
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="#{inicio.pagina}">Actividades · Centro Cultural Aljibe</title>
+    <!-- @{...} construye la ruta del recurso estático respetando el contexto de la aplicación. -->
+    <link rel="stylesheet" th:href="@{/css/centro.css}">
+</head>
+<body>
+<main class="page">
+
+    <!--
+        th:replace: el elemento anfitrión (este div) DESAPARECE y es sustituido por la raíz
+        del fragmento (el <header>). Se pasan al fragmento el título y la descripción de ESTA página.
+    -->
+    <div th:replace="~{fragments/comun :: cabecera(#{inicio.titulo}, #{inicio.intro})}">
+        Cabecera sustituida por el fragmento.
+    </div>
+
+    <!-- Misma navegación en todas las páginas; el parámetro indica cuál es la activa. -->
+    <nav th:replace="~{fragments/comun :: navegacion('inicio')}">Navegación sustituida</nav>
+
+    <section class="seccion">
+        <h2 th:text="#{inicio.seleccion.titulo}">Actividades destacadas</h2>
+        <p class="muted" th:text="#{inicio.seleccion.texto}">Una selección de lo que ocurre.</p>
+
+        <div class="grid">
+            <!--
+                th:each recorre los códigos de actividad que entrega el controlador.
+                Va en un th:block (no genera HTML) porque en un mismo elemento th:replace se
+                evalúa ANTES que th:each y no tendría acceso a la variable del bucle.
+            -->
+            <th:block th:each="codigo : ${actividades}">
+                <!--
+                    Una sola estructura HTML para todas las actividades: el fragmento recibe los
+                    cinco valores. Cada clave se compone con el código, por ejemplo
+                    'actividad.' + 'ceramica' + '.titulo', y Thymeleaf la busca en el idioma activo.
+                -->
+                <article th:replace="~{fragments/comun :: actividad(
+                        #{'actividad.' + ${codigo} + '.titulo'},
+                        #{'actividad.' + ${codigo} + '.descripcion'},
+                        #{'actividad.' + ${codigo} + '.fecha'},
+                        #{'actividad.' + ${codigo} + '.duracion'},
+                        #{'actividad.' + ${codigo} + '.lugar'})}">
+                    Tarjeta de actividad sustituida por el fragmento.
+                </article>
+            </th:block>
+        </div>
+    </section>
+
+    <section class="card cta">
+        <p th:text="#{inicio.cta}">¿Primera vez? Consulta cómo organizar tu visita.</p>
+        <a class="button" th:href="@{/visita}" th:text="#{inicio.cta.boton}">Preparar mi visita</a>
+    </section>
+
+    <!--
+        th:insert: el elemento anfitrión (este footer, con su clase) SE CONSERVA y el fragmento
+        se coloca DENTRO de él. Por eso el fragmento "pie" tiene como raíz un div.
+    -->
+    <footer class="footer" th:insert="~{fragments/comun :: pie}">
+        Pie común insertado dentro del footer.
+    </footer>
+</main>
+</body>
+</html>

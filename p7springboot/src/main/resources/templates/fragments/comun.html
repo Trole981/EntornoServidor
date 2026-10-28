@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--
+    Plantilla de FRAGMENTOS compartidos por las páginas del centro cultural.
+    Esta plantilla no se muestra sola: las demás la usan con ~{fragments/comun :: nombre(...)}.
+    Los fragmentos con parámetros no escriben textos fijos: reciben los valores ya
+    traducidos desde la página que los usa, o buscan sus etiquetas en messages*.properties.
+-->
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- CABECERA: título y descripción variables, según la página actual. -->
+<header class="hero" th:fragment="cabecera(titulo, descripcion)">
+    <div class="eyebrow" th:text="#{centro.nombre}">Centro Cultural Aljibe</div>
+    <h1 th:text="${titulo}">Título de la página</h1>
+    <p class="intro" th:text="${descripcion}">Descripción de la página.</p>
+</header>
+
+<!--
+    NAVEGACIÓN + SELECTOR DE IDIOMA.
+    paginaActiva ('inicio' o 'visita') sirve para dos cosas:
+      1. marcar el enlace de la página actual (aria-current="page");
+      2. que el cambio de idioma vuelva a la MISMA página: @{${ruta}(lang='en')}
+         genera "/?lang=en" o "/visita?lang=en". Del resto se encarga el
+         LocaleChangeInterceptor (ver ConfiguracionIdioma.java), que guarda el
+         idioma en la sesión.
+-->
+<nav class="nav" aria-label="Navegación principal" th:attr="aria-label=#{nav.etiqueta}"
+     th:fragment="navegacion(paginaActiva)"
+     th:with="ruta=${paginaActiva == 'visita'} ? '/visita' : '/'">
+    <div class="nav-links">
+        <a th:href="@{/}" th:text="#{nav.inicio}"
+           th:attr="aria-current=${paginaActiva == 'inicio'} ? 'page'">Actividades</a>
+        <a th:href="@{/visita}" th:text="#{nav.visita}"
+           th:attr="aria-current=${paginaActiva == 'visita'} ? 'page'">Tu visita</a>
+    </div>
+    <div class="idiomas">
+        <span class="idiomas-etiqueta" th:text="#{idioma.etiqueta}">Idioma</span>
+        <!-- #locale.language es el idioma activo; se resalta el botón correspondiente. -->
+        <a th:href="@{${ruta}(lang='es')}" lang="es" th:text="#{idioma.es}"
+           th:classappend="${#locale.language == 'es'} ? 'activo'">Español</a>
+        <a th:href="@{${ruta}(lang='en')}" lang="en" th:text="#{idioma.en}"
+           th:classappend="${#locale.language == 'en'} ? 'activo'">English</a>
+    </div>
+</nav>
+
+<!--
+    PIE: su elemento raíz es un div porque las páginas lo integran con th:insert
+    dentro de un <footer> propio (el elemento anfitrión se conserva).
+-->
+<div class="pie" th:fragment="pie">
+    <p th:text="#{pie.direccion}">Dirección</p>
+    <p th:text="#{pie.contacto}">Contacto</p>
+    <p class="pie-nota" th:text="#{pie.nota}">Nota</p>
+</div>
+
+<!--
+    TARJETA DE ACTIVIDAD parametrizada: una sola estructura HTML para todas las actividades.
+    Recibe los textos ya resueltos; las etiquetas fijas (Fecha, Duración, Lugar) salen
+    del catálogo de mensajes.
+-->
+<article class="card actividad" th:fragment="actividad(titulo, descripcion, fecha, duracion, lugar)">
+    <h3 th:text="${titulo}">Título de la actividad</h3>
+    <p th:text="${descripcion}">Descripción breve.</p>
+    <dl class="datos">
+        <div>
+            <dt th:text="#{actividad.etiqueta.fecha}">Fecha</dt>
+            <dd th:text="${fecha}">Fecha</dd>
+        </div>
+        <div>
+            <dt th:text="#{actividad.etiqueta.duracion}">Duración</dt>
+            <dd th:text="${duracion}">Duración</dd>
+        </div>
+        <div>
+            <dt th:text="#{actividad.etiqueta.lugar}">Lugar</dt>
+            <dd th:text="${lugar}">Lugar</dd>
+        </div>
+    </dl>
+</article>
+
+<!-- BLOQUE DE INFORMACIÓN parametrizado, usado varias veces en la página de visita. -->
+<section class="card info" th:fragment="infoBloque(titulo, texto)">
+    <h2 th:text="${titulo}">Título del bloque</h2>
+    <p th:text="${texto}">Texto informativo.</p>
+</section>
+
+</body>
+</html>

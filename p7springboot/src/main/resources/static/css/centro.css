@@ -1,0 +1,128 @@
+/* Estilos propios del Centro Cultural Aljibe. Diseño móvil primero. */
+:root {
+    --fondo: #faf5ec;
+    --tarjeta: #ffffff;
+    --texto: #2b2622;
+    --suave: #6b6259;
+    --acento: #b4472f;       /* terracota */
+    --acento-oscuro: #8a3321;
+    --verde: #2f5d50;
+    --borde: #e6dccb;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: Georgia, "Times New Roman", serif;
+    line-height: 1.55;
+}
+
+.page {
+    max-width: 62rem;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+/* Cabecera */
+.hero {
+    background: var(--verde);
+    color: #fff;
+    border-radius: 0.75rem;
+    padding: 1.5rem 1.25rem;
+}
+.eyebrow {
+    font-family: system-ui, sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.85;
+}
+.hero h1 { margin: 0.4rem 0; font-size: 1.8rem; line-height: 1.2; }
+.intro { margin: 0; max-width: 40rem; }
+
+/* Navegación e idioma: apilados en móvil */
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1rem 0;
+    font-family: system-ui, sans-serif;
+}
+.nav-links, .idiomas { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+.nav a {
+    padding: 0.45rem 0.9rem;
+    border: 1px solid var(--borde);
+    border-radius: 999px;
+    background: var(--tarjeta);
+    color: var(--texto);
+    text-decoration: none;
+}
+.nav a:hover, .nav a:focus-visible { border-color: var(--acento); }
+.nav a[aria-current="page"], .idiomas a.activo {
+    background: var(--acento);
+    border-color: var(--acento);
+    color: #fff;
+}
+.idiomas-etiqueta { color: var(--suave); font-size: 0.9rem; }
+
+/* Secciones y tarjetas */
+.seccion { margin: 1.5rem 0; }
+.seccion h2, .info h2 { margin: 0 0 0.25rem; font-size: 1.4rem; }
+.muted { color: var(--suave); margin-top: 0; }
+
+.grid { display: grid; gap: 1rem; grid-template-columns: 1fr; margin-top: 1rem; }
+.card {
+    background: var(--tarjeta);
+    border: 1px solid var(--borde);
+    border-radius: 0.75rem;
+    padding: 1.1rem 1.25rem;
+}
+.actividad h3 { margin: 0 0 0.4rem; font-size: 1.2rem; color: var(--acento-oscuro); }
+.actividad p, .info p { margin: 0 0 0.75rem; }
+
+.datos { margin: 0; font-family: system-ui, sans-serif; font-size: 0.9rem; }
+.datos div { display: flex; gap: 0.5rem; padding: 0.25rem 0; border-top: 1px solid var(--borde); }
+.datos dt { font-weight: 600; min-width: 5.5rem; color: var(--suave); }
+.datos dd { margin: 0; }
+
+.cta { display: flex; flex-direction: column; gap: 0.75rem; align-items: flex-start; margin: 1.5rem 0; }
+.cta p { margin: 0; }
+.volver { margin: 1.5rem 0; }
+
+.button {
+    display: inline-block;
+    padding: 0.6rem 1.1rem;
+    border-radius: 0.5rem;
+    background: var(--acento);
+    color: #fff;
+    font-family: system-ui, sans-serif;
+    text-decoration: none;
+}
+.button:hover, .button:focus-visible { background: var(--acento-oscuro); }
+
+/* Pie */
+.footer {
+    margin-top: 1.5rem;
+    padding: 1rem 0 0.5rem;
+    border-top: 1px solid var(--borde);
+    color: var(--suave);
+    font-family: system-ui, sans-serif;
+    font-size: 0.9rem;
+}
+.pie p { margin: 0.15rem 0; }
+.pie-nota { font-style: italic; }
+
+/* Pantallas medianas y grandes */
+@media (min-width: 40rem) {
+    .page { padding: 1.5rem; }
+    .hero { padding: 2rem; }
+    .hero h1 { font-size: 2.3rem; }
+    .nav { flex-direction: row; justify-content: space-between; align-items: center; }
+    .grid { grid-template-columns: repeat(2, 1fr); }
+    /* Si queda una tarjeta suelta en la última fila, ocupa todo el ancho. */
+    .grid > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+    .cta { flex-direction: row; justify-content: space-between; align-items: center; }
+}

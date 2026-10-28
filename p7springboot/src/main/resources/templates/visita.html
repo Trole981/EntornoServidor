@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!-- Página de visita: información práctica del centro. Propósito distinto al de la página de inicio. -->
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="#{visita.pagina}">Tu visita · Centro Cultural Aljibe</title>
+    <link rel="stylesheet" th:href="@{/css/centro.css}">
+</head>
+<body>
+<main class="page">
+
+    <!-- Mismo fragmento de cabecera que en inicio, con título y descripción propios de esta página. -->
+    <div th:replace="~{fragments/comun :: cabecera(#{visita.titulo}, #{visita.intro})}">
+        Cabecera sustituida por el fragmento.
+    </div>
+
+    <nav th:replace="~{fragments/comun :: navegacion('visita')}">Navegación sustituida</nav>
+
+    <!--
+        Cada bloque informativo reutiliza el fragmento infoBloque(titulo, texto).
+        Con un fragmento parametrizado no se repite la estructura HTML de cada tarjeta.
+    -->
+    <section class="grid">
+        <div th:replace="~{fragments/comun :: infoBloque(#{visita.horarios.titulo}, #{visita.horarios.texto})}"></div>
+        <div th:replace="~{fragments/comun :: infoBloque(#{visita.llegar.titulo}, #{visita.llegar.texto})}"></div>
+        <div th:replace="~{fragments/comun :: infoBloque(#{visita.accesibilidad.titulo}, #{visita.accesibilidad.texto})}"></div>
+        <div th:replace="~{fragments/comun :: infoBloque(#{visita.entradas.titulo}, #{visita.entradas.texto})}"></div>
+        <div th:replace="~{fragments/comun :: infoBloque(#{visita.consejos.titulo}, #{visita.consejos.texto})}"></div>
+    </section>
+
+    <p class="volver">
+        <a class="button" th:href="@{/}" th:text="#{visita.volver}">Volver a las actividades</a>
+    </p>
+
+    <!-- th:insert conserva el footer anfitrión y coloca dentro el fragmento del pie. -->
+    <footer class="footer" th:insert="~{fragments/comun :: pie}">
+        Pie común insertado dentro del footer.
+    </footer>
+</main>
+</body>
+</html>
