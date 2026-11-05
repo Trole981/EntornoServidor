@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="#{editar.titulo}">Editar portfolio</title>
+    <link rel="stylesheet" th:href="@{/css/estilo.css}">
+</head>
+<body>
+<a th:href="@{/}" th:text="#{inicio.nombre}">Inicio</a>
+
+<main>
+    <h1 th:text="#{editar.titulo}">Editar portfolio</h1>
+
+    <!-- novalidate: las reglas las comprueba el servidor, no el navegador. -->
+    <form method="post" th:action="@{/portfolio/editar}" novalidate>
+
+        <!-- Enter pulsa el primer botón del formulario. Este, oculto, evita que sea «Quitar». -->
+        <button type="submit" name="accion" value="" style="display: none" tabindex="-1"></button>
+
+        <!-- Son botones para enviar lo escrito y no perderlo al cambiar de idioma. -->
+        <div class="botones">
+            <button type="submit" name="lang" value="es" class="boton-secundario" lang="es">Español</button>
+            <button type="submit" name="lang" value="en" class="boton-secundario" lang="en">English</button>
+        </div>
+
+        <section>
+            <h2 th:text="#{editar.datos}">Datos personales</h2>
+
+            <div class="campo">
+                <label for="nombre" th:text="#{editar.nombre}">Nombre completo</label>
+                <input id="nombre" name="nombre" th:value="${form.nombre}">
+
+                <label for="titular" th:text="#{editar.titular}">Titular profesional</label>
+                <input id="titular" name="titular" th:value="${form.titular}">
+
+                <label for="presentacion" th:text="#{editar.presentacion}">Presentación</label>
+                <textarea id="presentacion" name="presentacion" th:text="${form.presentacion}"></textarea>
+
+                <label for="ciudad" th:text="#{editar.ciudad}">Ciudad</label>
+                <input id="ciudad" name="ciudad" th:value="${form.ciudad}">
+
+                <label for="correo" th:text="#{editar.correo}">Correo electrónico</label>
+                <input id="correo" name="correo" type="email" th:value="${form.correo}">
+            </div>
+        </section>
+
+        <section>
+            <h2 th:text="#{editar.proyectos}">Proyectos</h2>
+
+            <p class="ayuda">
+                <span th:text="#{editar.filas}">Filas</span>:
+                <span th:text="${form.proyectos.size()}">1</span>
+                <span th:text="#{editar.de}">de</span>
+                <span th:text="${max}">5</span>
+            </p>
+
+            <div class="fila-proyecto" th:each="p, i : ${form.proyectos}">
+                <div class="campo">
+                    <label th:for="|titulo-${i.index}|" th:text="#{editar.proyecto.titulo}">Título</label>
+                    <input th:id="|titulo-${i.index}|" th:name="|proyectos[${i.index}].titulo|" th:value="${p.titulo}">
+                </div>
+
+                <div class="campo">
+                    <!-- type="text" para conservar lo escrito aunque no sea un número. -->
+                    <label th:for="|anio-${i.index}|" th:text="#{editar.proyecto.anio}">Año</label>
+                    <input th:id="|anio-${i.index}|" th:name="|proyectos[${i.index}].anio|" th:value="${p.anio}">
+                </div>
+
+                <div class="campo">
+                    <label th:for="|categoria-${i.index}|" th:text="#{editar.proyecto.categoria}">Categoría</label>
+                    <select th:id="|categoria-${i.index}|" th:name="|proyectos[${i.index}].categoria|">
+                        <!-- La opción vacía permite que una fila quede «completamente vacía». -->
+                        <option value="">--</option>
+                        <option value="aplicaciones" th:selected="${p.categoria == 'aplicaciones'}"
+                                th:text="#{categoria.aplicaciones}">Aplicaciones</option>
+                        <option value="sitios-web" th:selected="${p.categoria == 'sitios-web'}"
+                                th:text="#{categoria.sitiosWeb}">Sitios web</option>
+                        <option value="diseno" th:selected="${p.categoria == 'diseno'}"
+                                th:text="#{categoria.diseno}">Diseño</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label th:for="|estado-${i.index}|" th:text="#{editar.proyecto.estado}">Estado</label>
+                    <select th:id="|estado-${i.index}|" th:name="|proyectos[${i.index}].estado|">
+                        <option value="">--</option>
+                        <option value="en-curso" th:selected="${p.estado == 'en-curso'}"
+                                th:text="#{estado.enCurso}">En curso</option>
+                        <option value="terminado" th:selected="${p.estado == 'terminado'}"
+                                th:text="#{estado.acabado}">Terminado</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label th:for="|descripcion-${i.index}|" th:text="#{editar.proyecto.descripcion}">Descripción</label>
+                    <textarea th:id="|descripcion-${i.index}|" th:name="|proyectos[${i.index}].descripcion|"
+                              th:text="${p.descripcion}"></textarea>
+                </div>
+
+                <button type="submit" name="accion" class="boton-secundario" th:value="|quitar-${i.index}|"
+                        th:text="#{editar.quitar}">Quitar este proyecto</button>
+            </div>
+
+            <p class="ayuda" th:unless="${form.proyectos.size() lt max}"
+               th:text="#{editar.limite}">Has alcanzado el límite de proyectos</p>
+        </section>
+
+        <div class="botones">
+            <button type="submit" name="accion" value="anadir" class="boton-secundario"
+                    th:if="${form.proyectos.size() lt max}"
+                    th:text="#{editar.anadir}">Añadir proyecto</button>
+            <button type="submit" name="accion" value="generar"
+                    th:text="#{editar.generar}">Generar vista previa</button>
+        </div>
+    </form>
+</main>
+</body>
+</html>

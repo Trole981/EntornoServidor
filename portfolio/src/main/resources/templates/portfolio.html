@@ -8,6 +8,20 @@
             <li th:each="p : ${proyectos}" th:text="${p.titulo}"></li>
         </ul>
 
+        <div th:each="p : ${proyectos}">
+            <h3 th:text="${p.titulo}">Título</h3>
+            <p th:text="${p.descripcion}">Descripcion</p>
+            <div th:if="${p.tecnologias.size() > 0}">
+                <span th:each="t : ${p.tecnologias}" th:text="${t}">Java</span>
+            </div>
+
+            <a th:if="${p.enlaces != null and p.enlaces != ''}" th:href="${p.enlaces}" th:text="#{portfolio.ver}">Ver</a>
+            <img th:if="${p.imagen != null and p.imagen != ''}" th:src="${p.imagen}" th:alt="#{portfolio.alt(${p.titulo})}">
+
+            <p th:text="#{portfolio.resultados(${proyectos.size()})}">3 resultados</p>
+            <p th:if="${proyectos.size() == 0}" th:text="#{portfolio.vacio}">No se encontraron proyectos</p>
+        </div>
+
         <form method="get" th:action="@{/portfolio}">
             <select name="categoria">
                 <option value="todas" th:selected="${categoria == 'todas'}">Todas</option>
