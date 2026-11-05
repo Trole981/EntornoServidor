@@ -42,8 +42,8 @@ public class PortfolioController {
     private List<Proyecto> crearProyectos() {
         List<Proyecto> lista = new ArrayList<>();
             lista.add(new Proyecto("Springbootp7", 2026, "programacion", "Proyecto pequeño de springboot, varios idiomas.", "completado", List.of("Java", "Springboot"),"https://github.com/Trole981/EntornoServidor/tree/master/p7springboot", null));
-            lista.add(new Proyecto("PatronFactory", 2026, "diseño", "Proyecto pequeño de patrones de diseño.", "completado", List.of("Java", "Patrones de diseño"),null, "/img/Factory.png"));
-            lista.add(new Proyecto("Singleton", 2026, "estructura", "Proyecto pequeño de patrones de diseño.s.", "completado", new ArrayList<>(),"https://github.com/Trole981/EntornoServidor/tree/master/Singleton", "/img/Singleton.png"));
+            lista.add(new Proyecto("PatronFactory", 2024, "diseño", "Proyecto pequeño de patrones de diseño.", "completado", List.of("Java", "Patrones de diseño"),null, "/img/Factory.png"));
+            lista.add(new Proyecto("Singleton", 2020, "estructura", "Proyecto pequeño de patrones de diseños.", "completado", new ArrayList<>(),"https://github.com/Trole981/EntornoServidor/tree/master/Singleton", "/img/Singleton.png"));
         return lista;
     }
 

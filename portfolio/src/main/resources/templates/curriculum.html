@@ -13,6 +13,13 @@
     <h2 th:text="${nombre}">Nombre</h2>
     <p th:text="#{curriculum.titular}">Titular profesional</p>
     <p th:text="#{curriculum.presentacion}">Presentación</p>
+
+    <a th:href="@{/curriculum(imprimir=true,lang=${#locale.language})}"
+       class="no-imprimir"
+       th:text="#{curriculum.imprimir}">Imprimir / guardar como PDF</a>
+
+    <p th:if="${imprimir}" class="aviso-imprimir no-imprimir"
+       th:text="#{curriculum.avisoImprimir}"></p>
 </section>
 
 <section th:if="${contacto != ''}">

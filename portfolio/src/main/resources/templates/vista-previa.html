@@ -1,0 +1,40 @@
+<head>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+
+<main>
+    <h1 th:text="#{vista.titulo}">Vista previa</h1>
+
+    <section>
+        <h2 th:if="${form.nombre != ''}" th:text="${form.nombre}"></h2>
+        <p th:if="${form.titular != ''}" th:text="${form.titular}"></p>
+        <p th:if="${form.presentacion != ''}" th:text="${form.presentacion}"></p>
+        <p th:if="${form.ciudad != ''}" th:text="${form.ciudad}"></p>
+        <p th:if="${form.correo != ''}" th:text="${form.correo}"></p>
+    </section>
+
+    <section>
+        <h2 th:text="#{vista.proyectos}">Proyectos</h2>
+
+        <p th:if="${form.proyectos.isEmpty()}" th:text="#{vista.sinProyectos}"></p>
+
+        <article th:each="p : ${form.proyectos}">
+            <h3 th:text="${p.titulo}"></h3>
+            <p>
+                <span th:text="${p.anio}"></span> ·
+                <span th:text="#{|categoria.${p.categoria}|}"></span>
+            </p>
+
+            <span th:switch="${p.estado}">
+                <span th:case="'en-curso'" class="etiqueta etiqueta-verde"
+                      th:text="#{estado.en-curso}">En curso</span>
+                <span th:case="'terminado'" class="etiqueta etiqueta-gris"
+                      th:text="#{estado.terminado}">Terminado</span>
+            </span>
+
+            <p th:text="${p.descripcion}"></p>
+        </article>
+    </section>
+
+    <a th:href="@{/portfolio/editar}" th:text="#{vista.volver}">Volver a editar</a>
+</main>

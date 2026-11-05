@@ -1,19 +1,39 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="#{menu.portfolio}">Portfolio</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
     <body>
-        <p>Categoría: <span th:text="${categoria}"></span></p>
-        <p>Año: <span th:text="${anio}"></span></p>
+    <p th:text="|#{portfolio.categoria}: ${categoria}|"></p>
+    <p th:text="|#{portfolio.anio}: ${anio}|"></p>
         <p th:if="${errorAnio != null}" th:text="${errorAnio}"></p>
         <ul>
             <li th:each="p : ${proyectos}" th:text="${p.titulo}"></li>
         </ul>
 
+        <div th:each="p : ${proyectos}">
+            <h3 th:text="${p.titulo}">Título</h3>
+            <p th:text="${p.descripcion}">Descripcion</p>
+            <div th:if="${p.tecnologias.size() > 0}">
+                <span th:each="t : ${p.tecnologias}" th:text="${t}">Java</span>
+            </div>
+
+            <a th:if="${p.enlaces != null and p.enlaces != ''}" th:href="${p.enlaces}" th:text="#{portfolio.ver}">Ver</a>
+            <img th:if="${p.imagen != null and p.imagen != ''}" th:src="${p.imagen}" th:alt="#{portfolio.alt(${p.titulo})}">
+
+            <p th:text="#{portfolio.resultados(${proyectos.size()})}">3 resultados</p>
+            <p th:if="${proyectos.size() == 0}" th:text="#{portfolio.vacio}">No se encontraron proyectos</p>
+        </div>
+
         <form method="get" th:action="@{/portfolio}">
             <select name="categoria">
-                <option value="todas" th:selected="${categoria == 'todas'}">Todas</option>
-                <option value="programacion" th:selected="${categoria == 'programacion'}">Programacion</option>
-                <option value="diseño" th:selected="${categoria == 'diseño'}">Diseño</option>
-                <option value="estructura" th:selected="${categoria == 'estructura'}">Estructura</option>
+                <option value="todas" th:selected="${categoria == 'todas'}" th:text="#{categoria.todas}">Todas</option>
+                <option value="programacion" th:selected="${categoria == 'programacion'}" th:text="#{categoria.aplicaciones}">Programacion</option>
+                <option value="diseño" th:selected="${categoria == 'diseño'}" th:text="#{categoria.sitiosweb}">Diseño</option>
+                <option value="estructura" th:selected="${categoria == 'estructura'}" th:text="#{categoria.diseno}">Estructura</option>
             </select>
 
             <input type="number" name="anio" th:value="${anio}">

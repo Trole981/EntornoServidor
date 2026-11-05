@@ -8,13 +8,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
 public class CurriculumController {
 
     @GetMapping("/curriculum")
-    public String curriculum(@Value("${cv.nombre}") String nombre, Model model){
+    public String curriculum(@RequestParam(name = "imprimir", defaultValue = "false") boolean imprimir, @Value("${cv.nombre}") String nombre, Model model){
         model.addAttribute("nombre", nombre);
 
         Habilidad[] habilidades = {
@@ -45,7 +46,7 @@ public class CurriculumController {
                 new Experiencia("Manager", "Tzcat", "3 meses")
         };
         model.addAttribute("experiencias", experiencias);
-
+        model.addAttribute("imprimir", imprimir);
         return "curriculum";
     }
 }
