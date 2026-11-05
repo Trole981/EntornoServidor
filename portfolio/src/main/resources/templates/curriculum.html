@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!-- Página de inicio: descubrir actividades. Reutiliza los fragmentos de fragments/comun.html. -->
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+<section>
+    <h1 th:text="#{curriculum.perfil}">Perfil</h1>
+    <h2 th:text="${nombre}">Nombre</h2>
+    <p th:text="#{curriculum.titular}">Titular profesional</p>
+    <p th:text="#{curriculum.presentacion}">Presentación</p>
+</section>
+
+<section th:if="${contacto != ''}">
+    <h2 th:text="#{curriculum.contacto}">Contacto</h2>
+    <p th:text="${contacto}">correo@ejemplo.com</p>
+</section>
+
+<section>
+    <h2 th:text="#{cv.formacion}">Formación</h2>
+    <ul>
+        <li th:each="e : ${estudios}">
+            <strong th:text="${e.curso}">curso</strong>
+            <span th:text="${e.nivel}">nivel</span>
+            <span th:text="${e.anioInicio}">anioinicio</span>
+            <span th:if="${e.anioFin == null}" th:text="#{cv.encurso}">En curso</span>
+            <span th:if="${e.anioFin != null}" th:text="${e.anioFin}">2023</span>
+        </li>
+    </ul>
+</section>
+<section>
+    <h2 th:text="#{cv.experiencia}">Experiencia</h2>
+
+    <p th:if="${experiencias.length == 0}" th:text="#{cv.sinexperiencia}">En busca de mi primera experiencia</p>
+
+    <ul>
+        <li th:each="x : ${experiencias}">
+            <span th:text="${x.descripcion}">Experiencias</span>
+            <span th:text="${x.empresa}">Empresa</span>
+            <span th:text="${x.duracion}">Duracion</span>
+        </li>
+    </ul>
+</section>
+
+<section>
+    <h2 th:text="#{cv.habilidades}">Habilidades</h2>
+
+    <ul>
+        <li th:each="h : ${habilidades}" th:switch="${h.nivel}">
+            <span th:case="'alto'" class="nivel-alto">
+                <span th:text="${h.habilidad}"></span> —
+                <span th:text="#{nivel.alto}"></span>
+            </span>
+            <span th:case="'medio'" class="nivel-medio">
+                <span th:text="${h.habilidad}"></span> —
+                <span th:text="#{nivel.medio}"></span>
+            </span>
+            <span th:case="'bajo'" class="nivel-bajo">
+                <span th:text="${h.habilidad}"></span> —
+                <span th:text="#{nivel.bajo}"></span>
+            </span>
+        </li>
+    </ul>
+</section>
+
+<section>
+    <h2 th:text="#{cv.idiomas}">Idiomas</h2>
+
+    <ul>
+        <li th:each="i : ${idiomas}" th:switch="${i.nivel}">
+                    <span th:case="'alto'" class="nivel-alto">
+                        <span th:text="${i.nombre}"></span> —
+                        <span th:text="#{nivel.alto}"></span>
+                    </span>
+            <span th:case="'medio'" class="nivel-medio">
+                        <span th:text="${i.nombre}"></span> —
+                        <span th:text="#{nivel.medio}"></span>
+                    </span>
+            <span th:case="'bajo'" class="nivel-bajo">
+                        <span th:text="${i.nombre}"></span> —
+                        <span th:text="#{nivel.bajo}"></span>
+                </span>
+        </li>
+    </ul>
+</section>
+
+</body>
+</html>

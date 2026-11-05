@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="#{inicio.titulo}">Inicio</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<nav th:attr="aria-label=#{language.label}">
+    <span th:text="#{language.label}">Idioma</span>
+    <a th:href="@{/(lang='es')}" lang="es">Español</a>
+    <a th:href="@{/(lang='en')}" lang="en">English</a>
+</nav>
+<main>
+    <h1 th:text="#{inicio.titulo}">Inicio</h1>
+    <ul>
+        <li><a th:href="@{/curriculum}" th:text="#{menu.curriculum}">Currículum</a></li>
+        <li><a th:href="@{/portfolio}" th:text="#{menu.portfolio}">Portfolio</a></li>
+        <li><a th:href="@{/portfolio/editar}" th:text="#{menu.editar}">Editar</a></li>
+    </ul>
+</main>
+</body>
+</html>
