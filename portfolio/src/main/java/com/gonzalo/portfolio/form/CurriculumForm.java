@@ -3,6 +3,7 @@ package com.gonzalo.portfolio.form;
 import java.util.ArrayList;
 import java.util.List;
 
+//Base del formulario
 public class CurriculumForm {
     private String nombre = "";
     private String titular = "";

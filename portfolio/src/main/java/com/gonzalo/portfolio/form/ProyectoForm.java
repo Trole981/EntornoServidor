@@ -1,5 +1,5 @@
 package com.gonzalo.portfolio.form;
-
+//Base del formulario
 public class ProyectoForm {
 
     private String titulo = "";

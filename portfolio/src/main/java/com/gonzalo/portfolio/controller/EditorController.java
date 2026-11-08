@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class EditorController {
+public class EditorController {  // Aqui va a aparecer todo lo que hace falta en la pantalla de editar el portfolio.
 
     private static final List<String> CATEGORIAS = List.of("aplicaciones", "sitios-web", "diseno");
     private static final List<String> ESTADOS = List.of("en-curso", "terminado");
@@ -29,7 +29,7 @@ public class EditorController {
 
         model.addAttribute("form", form);
         model.addAttribute("max", maxProyectos);
-        model.addAttribute("errores", new HashMap<String, String>());
+        model.addAttribute("errores", new HashMap<String, String>());//en los errores, creamos un HashMap para que se vayan agregando.
         return "editar";   // nombre de tu plantilla
     }
 
@@ -39,6 +39,8 @@ public class EditorController {
                            Model model) {
 
         if (form.getProyectos().size() > maxProyectos) {
+            /*Comprobamos que haya menos proyectos que el maximo permitido. En caso contrario,
+            da un error por sobrepasar el limite.*/
             Map<String, String> errores = new HashMap<>();
             errores.put("limite", "error.limite");
             model.addAttribute("max", maxProyectos);
@@ -53,17 +55,17 @@ public class EditorController {
         Map<String, String> errores = new HashMap<>();
 
         if (accion.equals("generar")) {
-            validarDatos(form, errores, maxProyectos);
+            validarDatos(form, errores, maxProyectos);//Comprobamos los datos.
             if (errores.isEmpty()) {
+                //Si no hay errores, podemos mostrar la vista previa sin problemas.
                 model.addAttribute("form", form);
                 return "vista-previa";
             }
-            // Si quedó sin filas tras descartar vacías, que haya una visible
+            // Si se quedó sin filas tras descartar las vacías, que haya una visible
             if (form.getProyectos().isEmpty()) {
                 form.getProyectos().add(new ProyectoForm());
             }
         }
-
 
         model.addAttribute("max", maxProyectos);
         model.addAttribute("errores", errores);
@@ -97,14 +99,14 @@ public class EditorController {
     }
 
     private void validarDatos(CurriculumForm form, Map<String, String> errores, int max) {
-        // 1. Límite: antes de nada, por si manipulan el HTML
+        //  Límite: por si manipulan el HTML
         if (form.getProyectos().size() > max) {
             errores.put("limite", "error.limite");
             return; // no tiene sentido seguir validando
         }
 
-        // 2. Descartar filas vacías y null ANTES de validar,
-        //    para que los índices de los errores coincidan con las filas visibles
+        /* Descartar filas vacías y null ANTES de validar,
+           para que los índices de los errores coincidan con las filas visibles*/
         form.getProyectos().removeIf(this::filaVacia);
 
         if (form.getNombre().isBlank()) {
@@ -122,7 +124,7 @@ public class EditorController {
             errores.put("correo", "error.correo");
         }
 
-        // 4. Cada fila de proyecto (las vacías ya se descartaron, los índices coinciden)
+        // Cada fila de proyecto
         for (int i = 0; i < form.getProyectos().size(); i++) {
             ProyectoForm p = form.getProyectos().get(i);
             String prefijo = "proyectos" + i + ".";

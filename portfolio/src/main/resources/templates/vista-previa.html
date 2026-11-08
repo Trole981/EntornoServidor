@@ -4,7 +4,7 @@
 
 <main>
     <h1 th:text="#{vista.titulo}">Vista previa</h1>
-
+    <!--Aqui van los datos personales.-->
     <section>
         <h2 th:if="${form.nombre != ''}" th:text="${form.nombre}"></h2>
         <p th:if="${form.titular != ''}" th:text="${form.titular}"></p>
@@ -35,6 +35,6 @@
             <p th:text="${p.descripcion}"></p>
         </article>
     </section>
-
+    <!--se vuelve a la pagina anterior sin guardar los datos.-->
     <a th:href="@{/portfolio/editar}" th:text="#{vista.volver}">Volver a editar</a>
 </main>

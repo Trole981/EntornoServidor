@@ -13,12 +13,12 @@
 
     <h1 th:text="#{editar.titulo}">Editar portfolio</h1>
 
-    <!-- novalidate: las reglas las comprueba el servidor, no el navegador. -->
+    <!-- as reglas las comprueba el servidor, no el navegador. -->
     <p th:if="${errores.size() > 0}" th:text="#{editar.revisa}"></p>
 
     <form method="post" th:action="@{/portfolio/editar}" novalidate>
 
-        <!-- Enter pulsa el primer botón del formulario. Este, oculto, evita que sea «Quitar». -->
+        <!--Esto evita que se muestre el boton quitar hasta que se pulse el de añadir-->
         <button type="submit" name="accion" value="" style="display: none" tabindex="-1"></button>
 
         <!-- Son botones para enviar lo escrito y no perderlo al cambiar de idioma. -->
@@ -77,7 +77,7 @@
                 <div class="campo">
                     <label th:for="|titulo-${i.index}|" th:text="#{editar.proyecto.titulo}">Título</label>
                     <input th:id="|titulo-${i.index}|" th:name="|proyectos[${i.index}].titulo|" th:value="${p.titulo}">
-
+                    <!--Aqui es donde se comprueba si hay algun error, hay uno por campo.-->
                     <span th:id="|error-titulo-${i.index}|"
                           th:if="${errores.containsKey('proyectos' + i.index + '.titulo')}"
                           th:text="#{${errores['proyectos' + i.index + '.titulo']}}"></span>

@@ -12,21 +12,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
-public class CurriculumController {
+public class CurriculumController { //Aqui se introduce toda la informacion del curriculum.
 
     @GetMapping("/curriculum")
     public String curriculum(@RequestParam(name = "imprimir", defaultValue = "false") boolean imprimir, @Value("${cv.nombre}") String nombre, Model model){
         model.addAttribute("nombre", nombre);
 
-        Habilidad[] habilidades = {
+        Habilidad[] habilidades = {//las habilidades que tengo se van a crear aqui.
                 new Habilidad("Java", "medio"),
                 new Habilidad("HTML", "alto"),
                 new Habilidad("SQL", "bajo"),
                 new Habilidad("Git", "bajo")
-        }; //Una variable local.
-        model.addAttribute("habilidades", habilidades);
+        };
+        model.addAttribute("habilidades", habilidades);//vamos metiendo al model
 
-        Idioma[] idiomas = {
+        Idioma[] idiomas = {//aqui los idiomas
                 new Idioma("Inglés", "medio"),
                 new Idioma("Español", "alto")
         };

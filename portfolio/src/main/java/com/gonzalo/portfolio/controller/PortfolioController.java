@@ -38,7 +38,7 @@ public class PortfolioController {
 
         return "portfolio";
     }
-
+    //Creamos todos los proyectos que vamos a enseñar.
     private List<Proyecto> crearProyectos() {
         List<Proyecto> lista = new ArrayList<>();
             lista.add(new Proyecto("Springbootp7", 2026, "programacion", "Proyecto pequeño de springboot, varios idiomas.", "completado", List.of("Java", "Springboot"),"https://github.com/Trole981/EntornoServidor/tree/master/p7springboot", null));
@@ -47,6 +47,7 @@ public class PortfolioController {
         return lista;
     }
 
+    //Hacemos el metodo para filtrar los proyectos por categoria, año, o ambos.
     private List<Proyecto> filtrarProyectos(List<Proyecto> proyectos, String categoria, Integer anio){
         List<Proyecto> resultado=new ArrayList<>();
         for(Proyecto p: proyectos){

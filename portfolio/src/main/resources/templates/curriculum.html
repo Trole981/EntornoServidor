@@ -7,7 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
 </head>
 <body>
-
+<!--Seccion para datos básicos y boton de imprimir-->
 <section>
     <h1 th:text="#{curriculum.perfil}">Perfil</h1>
     <h2 th:text="${nombre}">Nombre</h2>
@@ -21,12 +21,12 @@
     <p th:if="${imprimir}" class="aviso-imprimir no-imprimir"
        th:text="#{curriculum.avisoImprimir}"></p>
 </section>
-
+<!--seccion de contacto, solo si no está vacía-->
 <section th:if="${contacto != ''}">
     <h2 th:text="#{curriculum.contacto}">Contacto</h2>
     <p th:text="${contacto}">correo@ejemplo.com</p>
 </section>
-
+<!--Seccion de toda mi formacion-->
 <section>
     <h2 th:text="#{cv.formacion}">Formación</h2>
     <ul>
@@ -39,6 +39,7 @@
         </li>
     </ul>
 </section>
+<!--Seccion de experiencias-->
 <section>
     <h2 th:text="#{cv.experiencia}">Experiencia</h2>
 
@@ -52,7 +53,7 @@
         </li>
     </ul>
 </section>
-
+<!--Habilidades-->
 <section>
     <h2 th:text="#{cv.habilidades}">Habilidades</h2>
 
@@ -73,7 +74,7 @@
         </li>
     </ul>
 </section>
-
+<!--Idiomas-->
 <section>
     <h2 th:text="#{cv.idiomas}">Idiomas</h2>
 
