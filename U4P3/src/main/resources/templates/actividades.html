@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<!-- Página renderizada en el servidor: Thymeleaf rellena los datos del Model y escapa el HTML en th:text. -->
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Centro Cultural — Programación de actividades</title>
+     <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+<header>
+    <div class="contenedor">
+        <h1>Centro Cultural Municipal</h1>
+        <p>Programación de actividades · Sevilla</p>
+    </div>
+</header>
+
+<main class="contenedor">
+    <section aria-labelledby="titulo-listado">
+        <h2 id="titulo-listado">Actividades (<span th:text="${#lists.size(actividades)}">0</span>)</h2>
+
+        <!-- mensajeExito llega como atributo flash tras el redirect del controlador -->
+        <div class="aviso exito" role="status" th:if="${mensajeExito}" th:text="${mensajeExito}">
+            Actividad añadida correctamente.
+        </div>
+
+        <div class="vacio" th:if="${#lists.isEmpty(actividades)}">
+            Todavía no hay actividades registradas. Añade la primera con el formulario de abajo.
+        </div>
+
+        <div class="tabla-scroll" th:unless="${#lists.isEmpty(actividades)}">
+            <table>
+                <thead>
+                <tr>
+                    <th>Actividad</th>
+                    <th>Fecha</th>
+                    <th class="num">Duración</th>
+                    <th class="num">Precio</th>
+                    <th class="num">Aforo</th>
+                    <th>Inscripción</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- th:each genera una fila por cada actividad recibida del controlador -->
+                <tr th:each="actividad : ${actividades}">
+                    <td>
+                        <div class="titulo" th:text="${actividad.titulo}">Título</div>
+                        <div class="descripcion" th:if="${actividad.descripcion}"
+                             th:text="${actividad.descripcion}">Descripción</div>
+                    </td>
+                    <td th:text="${#temporals.format(actividad.fecha, 'dd/MM/yyyy')}">01/01/2027</td>
+                    <td class="num" th:text="${actividad.duracionMinutos} + ' min'">60 min</td>
+                    <td class="num"
+                        th:text="${actividad.precio.signum() == 0} ? 'Gratis' : ${#numbers.formatDecimal(actividad.precio, 1, 'POINT', 2, 'COMMA')} + ' €'">0,00 €</td>
+                    <td class="num" th:text="${actividad.aforo}">30</td>
+                    <td>
+                        <span class="etiqueta" th:classappend="${actividad.inscripcionAbierta} ? 'abierta' : 'cerrada'"
+                              th:text="${actividad.inscripcionAbierta} ? 'Abierta' : 'Cerrada'">Abierta</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section aria-labelledby="titulo-formulario">
+        <h2 id="titulo-formulario">Añadir una actividad</h2>
+
+        <div class="panel">
+            <!--
+                th:object enlaza los campos con el DTO del controlador.
+                novalidate desactiva la validación del navegador para que se vean
+                los errores que genera el servidor (Bean Validation).
+            -->
+            <form th:action="@{/actividades}" th:object="${nuevaActividad}" method="post" novalidate>
+
+                <div class="aviso error" role="alert" th:if="${#fields.hasErrors('*')}">
+                    <strong>Revisa estos datos antes de guardar:</strong>
+                    <ul>
+                        <li th:each="error : ${#fields.errors('*')}" th:text="${error}">Error</li>
+                    </ul>
+                </div>
+
+                <div class="rejilla">
+                    <div class="ancho">
+                        <label for="titulo">Título <small>(obligatorio, máx. 80)</small></label>
+                        <input id="titulo" type="text" th:field="*{titulo}" th:errorclass="invalido"
+                               placeholder="Ej. Taller de cerámica de Triana">
+                        <p class="error-campo" th:errors="*{titulo}"></p>
+                    </div>
+
+                    <div class="ancho">
+                        <label for="descripcion">Descripción <small>(opcional, máx. 300)</small></label>
+                        <textarea id="descripcion" th:field="*{descripcion}" th:errorclass="invalido"></textarea>
+                        <p class="error-campo" th:errors="*{descripcion}"></p>
+                    </div>
+
+                    <div>
+                        <label for="fecha">Fecha</label>
+                        <input id="fecha" type="date" th:field="*{fecha}" th:errorclass="invalido">
+                        <p class="error-campo" th:errors="*{fecha}"></p>
+                    </div>
+
+                    <div>
+                        <label for="duracionMinutos">Duración <small>(15–480 min)</small></label>
+                        <input id="duracionMinutos" type="number" th:field="*{duracionMinutos}"
+                               th:errorclass="invalido">
+                        <p class="error-campo" th:errors="*{duracionMinutos}"></p>
+                    </div>
+
+                    <div>
+                        <label for="precio">Precio en € <small>(0–999,99)</small></label>
+                        <input id="precio" type="number" step="0.01" th:field="*{precio}"
+                               th:errorclass="invalido">
+                        <p class="error-campo" th:errors="*{precio}"></p>
+                    </div>
+
+                    <div>
+                        <label for="aforo">Aforo <small>(1–200)</small></label>
+                        <input id="aforo" type="number" th:field="*{aforo}" th:errorclass="invalido">
+                        <p class="error-campo" th:errors="*{aforo}"></p>
+                    </div>
+
+                    <div class="ancho check">
+                        <input id="inscripcionAbierta" type="checkbox" th:field="*{inscripcionAbierta}">
+                        <label for="inscripcionAbierta">Inscripción abierta</label>
+                    </div>
+                </div>
+
+                <button type="submit">Guardar actividad</button>
+            </form>
+        </div>
+    </section>
+</main>
+</body>
+</html>

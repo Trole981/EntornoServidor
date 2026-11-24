@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "Recurso")
@@ -18,18 +19,24 @@ public class Recurso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 12, unique = true)
-    private String codigo;
+    @Column(length = 80, unique = true)
+    private String titulo;
 
-    @Column(length = 80)
-    private String nombre;
-
-    @Column(nullable = true, length = 250)
+    @Column(nullable = true, length = 300)
     private String descripcion;
 
-    @Column(precision = 8, scale = 2)
-    private BigDecimal coste_reposicion;
+    @Column()
+    private LocalDate fecha;
+
+    @Column(precision = 5, scale = 2)
+    private BigDecimal duracionMinutos;
+
+    @Column(precision = 5)
+    private int precio;
+
+    @Column(precision = 3)
+    private Integer aforo;
 
     @Column()
-    private boolean prestable;
+    private boolean inscripcionAbierta;
 }
